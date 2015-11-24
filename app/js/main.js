@@ -6,7 +6,8 @@
     var scene, camera, renderer;
     var geometry, material, rootNode, isoMesh, isoMaterial;
 
-    var size = 15;
+    var size = 20;
+    var randomizer = 0.05;
     var width = 800, height = 800;
     
 
@@ -156,14 +157,17 @@
     }
 
     function createValues() {
-        var points = [];
+        var points = new Float32Array(Math.pow(size*2+1, 3));
+        var size2 = size*size;
+        var i = 0;
         for (var z = -size; z <= size; z++) {
             for (var y = -size; y <= size; y++) {
                 for (var x = -size; x <= size; x++) {
 
-                    var val = ((size * size) - (x * x + y * y + z * z)) / (size * size);
+                    var val = (size2 - (x * x + y * y + z * z)) / (size * size);
+                    val += Math.random()*randomizer - randomizer/2;
 
-                    points.push(val);
+                    points[i++] = val;
                 }
             }
         }
